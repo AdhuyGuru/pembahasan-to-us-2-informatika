@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Pembahasan TO US 2 Informatika Kelas 9 - SMP Islam Plus Baitul Maal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="https://ppdb.ppiabaitulmaal.sch.id/wp-content/uploads/2022/10/LOGO-SMP-1337x1536.png" alt="Logo SMP Plus Baitul Maal" class="h-10 md:h-14 w-auto object-contain">
+                <div>
+                    <h1 class="text-sm md:text-lg font-bold text-emerald-700 leading-tight">SMP ISLAM PLUS BAITUL MAAL</h1>
+                    <p class="text-[10px] md:text-xs text-slate-500 uppercase tracking-wider font-semibold">Kuis Pembahasan TO US 2 Informatika Kelas 9</p>
+                </div>
+            </div>
+            <div class="bg-emerald-50 px-3 py-1 md:px-4 md:py-2 rounded-full border border-emerald-100">
+                <span id="score-display" class="text-emerald-700 font-bold text-sm md:text-base">Skor: 0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-6">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex bg-white p-1 rounded-2xl shadow-sm border mb-6">
+            <button onclick="switchTab('welcome')" id="tab-welcome" class="flex-1 py-3 rounded-xl font-medium transition-all bg-emerald-600 text-white">Beranda</button>
+            <button onclick="switchTab('pg')" id="tab-pg" class="flex-1 py-3 rounded-xl font-medium transition-all text-slate-500">Pilihan Ganda</button>
+            <button onclick="switchTab('essay')" id="tab-essay" class="flex-1 py-3 rounded-xl font-medium transition-all text-slate-500">Uraian</button>
+        </div>
+
+        <!-- Section 1: Welcome -->
+        <section id="content-welcome" class="fade-in">
+            <div class="bg-white rounded-3xl p-8 shadow-md border text-center max-w-2xl mx-auto">
+                <div class="bg-emerald-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald-600">
+                    <i class="fas fa-graduation-cap text-4xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Portal Latihan Ujian Sekolah</h2>
+                <p class="text-slate-600 mb-8 leading-relaxed">
+                    Assalamu'alaikum Anak-anak Sholeh/Sholehah. Selamat datang di platform kuis Informatika untuk persiapan Ujian Sekolah 2 kalian.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left mb-8">
+                    <div class="p-4 border rounded-2xl bg-slate-50">
+                        <h3 class="font-bold mb-1 text-emerald-700"><i class="fas fa-list-ol mr-2"></i> 25 Soal PG</h3>
+                        <p class="text-xs text-slate-500">Amati gambar soal, pilih jawaban yang tepat. Kesempatan 3 kali menjawab.</p>
+                    </div>
+                    <div class="p-4 border rounded-2xl bg-slate-50">
+                        <h3 class="font-bold mb-1 text-blue-700"><i class="fas fa-pen-nib mr-2"></i> 5 Soal Uraian</h3>
+                        <p class="text-xs text-slate-500">Pelajari pembahasan soal uraian untuk memahami materi lebih dalam.</p>
+                    </div>
+                </div>
+                <button onclick="switchTab('pg')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-200 transition-all flex items-center justify-center gap-2">
+                    Mulai Kerjakan <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section 2: Pilihan Ganda -->
+        <section id="content-pg" class="hidden fade-in space-y-6">
+            <div class="flex items-center justify-between mb-2">
+                <h2 class="text-xl font-bold flex items-center gap-2">
+                    <span id="pg-number" class="bg-emerald-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-sm">1</span>
+                    Soal Pilihan Ganda
+                </h2>
+                <span class="text-sm font-medium text-slate-500">Kesempatan: <span id="attempts-left" class="text-orange-600 font-bold">3</span>x</span>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-md border overflow-hidden">
+                <!-- Image Frame: Teks soal ditiadakan karena sudah ada di gambar -->
+                <div class="bg-slate-100 p-4 border-b flex justify-center items-center min-h-[300px] relative">
+                    <img id="pg-image" src="" alt="Gambar Soal" class="max-w-full h-auto rounded-lg shadow-sm bg-white border" onerror="handleImageError(this)">
+                </div>
+
+                <!-- Answer Area -->
+                <div class="p-6 md:p-8">
+                    <div id="pg-options" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-2">
+                        <!-- Tombol pilihan A, B, C, D -->
+                    </div>
+
+                    <!-- Feedback Area -->
+                    <div id="pg-feedback" class="mt-6 hidden p-5 rounded-2xl animate-in slide-in-from-bottom-2">
+                        <!-- Content generated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex items-center justify-between pt-4">
+                <button onclick="prevPg()" id="btn-prev" class="px-6 py-2 border bg-white rounded-xl text-slate-600 disabled:opacity-30 flex items-center gap-2 font-medium">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <div class="text-slate-400 text-sm hidden md:block">
+                    Soal <span id="current-pos">1</span> dari 25
+                </div>
+                <button onclick="nextPg()" id="btn-next" class="px-6 py-2 bg-slate-800 text-white rounded-xl disabled:opacity-30 flex items-center gap-2 font-medium">
+                    Lanjut <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section 3: Essay -->
+        <section id="content-essay" class="hidden fade-in space-y-4">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-book-open text-emerald-600"></i> Pembahasan Soal Uraian
+            </h2>
+            <div id="essay-list" class="space-y-4">
+                <!-- Essay items generated by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-12 py-8 bg-white border-t">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <p class="text-slate-400 text-sm italic">&copy; 2026 SMP Islam Plus Baitul Maal - Tim Informatika</p>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * ARRAY KUNCI JAWABAN (1-25)
+         * Silakan ganti huruf sesuai kunci jawaban yang benar.
+         */
+        const KUNCI_JAWABAN_PG = [
+            "B", "C", "C", "C", "C", // 1-5
+            "D", "A", "D", "B", "B", // 6-10
+            "A", "C", "D", "C", "D", // 11-15
+            "B", "D", "B", "D", "A", // 16-20
+            "C", "B", "B", "B", "C"  // 21-25
+        ];
+
+        const TOTAL_PG = 25;
+        const pgData = Array.from({ length: TOTAL_PG }, (_, i) => ({
+            id: i + 1,
+            image: `images/soal-pg-${i + 1}.png`,
+            correct: KUNCI_JAWABAN_PG[i],
+            explanation: `Kunci jawaban yang benar adalah ${KUNCI_JAWABAN_PG[i]}. Pastikan Anda membaca instruksi pada gambar dengan teliti.`
+        }));
+
+        const essayData = [
+            { 
+                q: "Mengapa penting untuk menjaga keamanan data pribadi saat berselancar di internet? Jelaskan alasan kalian dengan memberikan 3 contoh ancaman yang dapat terjadi!", 
+                a: "Menjaga keamanan data pribadi sangat penting untuk melindungi privasi dan mencegah penyalahgunaan identitas. 3 Contoh ancamannya adalah: 1. Phishing (pencurian data sensitif melalui link palsu), 2. Identity Theft (pencurian identitas untuk penipuan), dan 3. Penyebaran data pribadi untuk kepentingan iklan yang mengganggu (spam) atau pemerasan." 
+            },
+            { 
+                q: "Salah satu cara menjaga keamanan internet adalah dengan membuat kata sandi yang kuat. Jelaskan karakteristik kata sandi yang aman!", 
+                a: "Karakteristik kata sandi yang kuat meliputi: minimal 8-12 karakter, merupakan kombinasi antara huruf besar (uppercase), huruf kecil (lowercase), angka, dan simbol khusus. Selain itu, sebaiknya tidak menggunakan informasi pribadi yang mudah ditebak seperti tanggal lahir atau nama anggota keluarga." 
+            },
+            { 
+                q: "Jelaskan langkah-langkah mengatur spasi paragraf menjadi double pada aplikasi Microsoft Word!", 
+                a: "Langkah-langkahnya adalah: 1. Seleksi (blok) teks yang ingin diubah, 2. Pilih tab 'Home', 3. Klik ikon 'Line and Paragraph Spacing' di grup Paragraph, 4. Pilih angka '2.0'. Cara cepat lainnya adalah dengan menekan tombol kombinasi Ctrl + 2." 
+            },
+            { 
+                q: "Jelaskan langkah-langkah membuat tabel dengan ukuran 3 kolom dan 3 baris pada aplikasi Microsoft Word!", 
+                a: "Langkah-langkahnya: 1. Klik tab 'Insert', 2. Klik tombol 'Table', 3. Geser kursor pada kotak-kotak grid hingga membentuk area 3x3 (3 kotak ke samping dan 3 kotak ke bawah), 4. Klik mouse untuk meletakkan tabel tersebut di lembar kerja." 
+            },
+            { 
+                q: "Jelaskan apa saja manfaat aplikasi Canva dalam kehidupan sehari-hari!", 
+                a: "Manfaat Canva meliputi: 1. Memudahkan pembuatan desain grafis (poster, kartu ucapan, logo) tanpa harus ahli desain, 2. Menyediakan template presentasi yang menarik untuk tugas sekolah, 3. Membantu pembuatan konten media sosial yang estetik, dan 4. Membantu pembuatan dokumen kreatif seperti resume atau brosur secara cepat dan efisien." 
+            }
+        ];
+
+        // State Management
+        let currentPg = 0;
+        let score = 0;
+        let attempts = Array(TOTAL_PG).fill(0);
+        let userAnswers = Array(TOTAL_PG).fill(null);
+        let revealed = Array(TOTAL_PG).fill(false);
+
+        // Core Functions
+        function switchTab(tabId) {
+            ['welcome', 'pg', 'essay'].forEach(id => {
+                document.getElementById(`content-${id}`).classList.add('hidden');
+                document.getElementById(`tab-${id}`).className = "flex-1 py-3 rounded-xl font-medium transition-all text-slate-500 hover:bg-slate-100";
+            });
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).className = "flex-1 py-3 rounded-xl font-medium transition-all bg-emerald-600 text-white shadow-md shadow-emerald-100";
+            
+            if(tabId === 'pg') renderPg();
+            if(tabId === 'essay') renderEssay();
+        }
+
+        function renderPg() {
+            const data = pgData[currentPg];
+            document.getElementById('pg-number').innerText = data.id;
+            document.getElementById('current-pos').innerText = data.id;
+            document.getElementById('attempts-left').innerText = 3 - attempts[currentPg];
+            
+            const imgElement = document.getElementById('pg-image');
+            imgElement.src = data.image;
+
+            const optionsContainer = document.getElementById('pg-options');
+            optionsContainer.innerHTML = '';
+            
+            ['A', 'B', 'C', 'D'].forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = getOptionStyle(opt);
+                btn.innerHTML = `<span class="text-xl font-bold">${opt}</span>`;
+                btn.onclick = () => handleAnswer(opt);
+                btn.disabled = userAnswers[currentPg] !== null || revealed[currentPg];
+                optionsContainer.appendChild(btn);
+            });
+
+            const feedback = document.getElementById('pg-feedback');
+            if (userAnswers[currentPg] === data.correct) {
+                feedback.className = "mt-6 p-5 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-700 font-bold block text-center";
+                feedback.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Jawaban Benar!`;
+            } else if (revealed[currentPg]) {
+                feedback.className = "mt-6 p-5 rounded-2xl bg-orange-50 border border-orange-100 block text-orange-800";
+                feedback.innerHTML = `<div class="font-bold mb-1"><i class="fas fa-info-circle mr-2"></i> Kunci Jawaban & Pembahasan:</div><p class="text-sm opacity-90">${data.explanation}</p>`;
+            } else {
+                feedback.classList.add('hidden');
+            }
+
+            document.getElementById('btn-prev').disabled = currentPg === 0;
+            document.getElementById('btn-next').disabled = currentPg === TOTAL_PG - 1;
+        }
+
+        function getOptionStyle(opt) {
+            const base = "border-2 h-16 rounded-2xl font-medium transition-all flex items-center justify-center ";
+            if (userAnswers[currentPg] === opt) {
+                return base + "border-emerald-500 bg-emerald-50 text-emerald-700 shadow-sm shadow-emerald-100";
+            }
+            if (revealed[currentPg] && opt === pgData[currentPg].correct) {
+                return base + "border-blue-500 bg-blue-50 text-blue-700";
+            }
+            return base + "border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/50 text-slate-500";
+        }
+
+        function handleAnswer(opt) {
+            const data = pgData[currentPg];
+            attempts[currentPg]++;
+            
+            if (opt === data.correct) {
+                userAnswers[currentPg] = opt;
+                score += 4;
+                updateScore();
+            } else {
+                if (attempts[currentPg] >= 3) {
+                    revealed[currentPg] = true;
+                }
+            }
+            renderPg();
+        }
+
+        function updateScore() {
+            document.getElementById('score-display').innerText = `Skor: ${score}`;
+        }
+
+        function handleImageError(img) {
+            img.onerror = null; 
+            img.src = `https://placehold.co/800x400/f8fafc/64748b?text=Gambar+Soal+No+${currentPg + 1}`;
+        }
+
+        function nextPg() { if (currentPg < TOTAL_PG - 1) { currentPg++; renderPg(); } }
+        function prevPg() { if (currentPg > 0) { currentPg--; renderPg(); } }
+
+        function renderEssay() {
+            const container = document.getElementById('essay-list');
+            container.innerHTML = essayData.map((item, i) => `
+                <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+                    <button onclick="toggleEssay(${i})" class="w-full text-left p-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                        <span class="font-bold text-slate-700">${i+1}. ${item.q}</span>
+                        <i id="icon-essay-${i}" class="fas fa-chevron-down text-slate-300"></i>
+                    </button>
+                    <div id="ans-essay-${i}" class="hidden p-5 bg-emerald-50/50 border-t border-emerald-50">
+                        <div class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-2">Pembahasan:</div>
+                        <p class="text-slate-600 leading-relaxed">${item.a}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleEssay(i) {
+            const el = document.getElementById(`ans-essay-${i}`);
+            const icon = document.getElementById(`icon-essay-${i}`);
+            const isHidden = el.classList.contains('hidden');
+            if(isHidden) {
+                el.classList.remove('hidden');
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                el.classList.add('hidden');
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            }
+        }
+    </script>
+</body>
+</html>
